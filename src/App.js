@@ -1,29 +1,8 @@
 import { useState } from "react";
 import "./app.css";
 
-const initialFriends = [
-  {
-    id: 118836,
-    name: "Clark",
-    image: "https://i.pravatar.cc/48?u=118836",
-    balance: -7,
-  },
-  {
-    id: 933372,
-    name: "Sarah",
-    image: "https://i.pravatar.cc/48?u=933372",
-    balance: 20,
-  },
-  {
-    id: 499476,
-    name: "Anthony",
-    image: "https://i.pravatar.cc/48?u=499476",
-    balance: 0,
-  },
-];
-
 export default function App() {
-  const [freinds, seFreinds] = useState(initialFriends);
+  const [freinds, seFreinds] = useState([]);
   const [selected, setSelected] = useState(null);
 
   const selectedFriend = freinds.find((friend) => friend.id === selected);
@@ -64,16 +43,20 @@ export default function App() {
 function FreindList({ freindList, addFreind, selected, handleSelected }) {
   return (
     <div className="SecOne">
-      <ul>
-        {freindList.map((freind) => (
-          <Freind
-            freind={freind}
-            key={freind.id}
-            selected={selected}
-            handleSelected={handleSelected}
-          />
-        ))}
-      </ul>
+      {freindList.length > 0 ? (
+        <ul>
+          {freindList.map((freind) => (
+            <Freind
+              freind={freind}
+              key={freind.id}
+              selected={selected}
+              handleSelected={handleSelected}
+            />
+          ))}
+        </ul>
+      ) : (
+        <div className="prompt">Start By Adding freinds</div>
+      )}
       <Form addFreind={addFreind} />
     </div>
   );
@@ -203,47 +186,47 @@ function Main({ active, onSplit }) {
     onSplit(active.id, amount);
   }
 
-  return (
-    active && (
-      <form className="main" onSubmit={handleSubmit}>
-        <h1>Split A Bill With {active.name}</h1>
-        <div>
-          <span>Bill Value</span>
-          <input
-            type="text"
-            placeholder="Bill"
-            value={bill}
-            onChange={(e) => handleBillValue(Number(e.target.value))}
-          />
-        </div>
-        <div>
-          <span>Your Expense</span>
-          <input
-            type="text"
-            placeholder="Bill"
-            value={expense}
-            onChange={(e) => handleExpenceValue(Number(e.target.value))}
-          />
-        </div>
-        <div>
-          <span>{active.name} Expense</span>
-          <input
-            type="text"
-            placeholder="Bill"
-            className="dead"
-            value={activeExpense}
-            readOnly
-          />
-        </div>
-        <div>
-          <span>Who will be paying</span>
-          <select value={payer} onChange={(e) => setPayer(e.target.value)}>
-            <option value={"you"}>you</option>
-            <option value={active.name}>{active.name}</option>
-          </select>
-        </div>
-        <Button>Split Bill</Button>
-      </form>
-    )
+  return active ? (
+    <form className="main" onSubmit={handleSubmit}>
+      <h1>Split A Bill With {active.name}</h1>
+      <div>
+        <span>Bill Value</span>
+        <input
+          type="text"
+          placeholder="Bill"
+          value={bill}
+          onChange={(e) => handleBillValue(Number(e.target.value))}
+        />
+      </div>
+      <div>
+        <span>Your Expense</span>
+        <input
+          type="text"
+          placeholder="Bill"
+          value={expense}
+          onChange={(e) => handleExpenceValue(Number(e.target.value))}
+        />
+      </div>
+      <div>
+        <span>{active.name} Expense</span>
+        <input
+          type="text"
+          placeholder="Bill"
+          className="dead"
+          value={activeExpense}
+          readOnly
+        />
+      </div>
+      <div>
+        <span>Who will be paying</span>
+        <select value={payer} onChange={(e) => setPayer(e.target.value)}>
+          <option value={"you"}>you</option>
+          <option value={active.name}>{active.name}</option>
+        </select>
+      </div>
+      <Button>Split Bill</Button>
+    </form>
+  ) : (
+    <div className="prompt main">Select A freind</div>
   );
 }

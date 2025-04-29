@@ -11,6 +11,21 @@
   box-sizing: border-box;
   list-style: none;
 }
+.prompt {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  background-color: #ffe8cc;
+  padding: 10px;
+  border-radius: 10px;
+}
+.prompt.main {
+  height: 288px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 html {
   font-size: 62.5%;
