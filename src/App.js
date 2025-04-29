@@ -5,15 +5,13 @@ export default function App() {
   const [freinds, seFreinds] = useState([]);
   const [selected, setSelected] = useState(null);
 
-  const selectedFriend = freinds.find((friend) => friend.id === selected);
-
   function handleAddFreind(freind) {
     seFreinds([...freinds, freind]);
   }
 
-  function handleSelected(id) {
-    if (id === selected) setSelected(null);
-    else setSelected(id);
+  function handleSelected(friend) {
+    if (friend === selected) setSelected(null);
+    else setSelected(friend);
   }
 
   function handleSplitBill(id, amount) {
@@ -35,7 +33,7 @@ export default function App() {
         selected={selected}
         handleSelected={handleSelected}
       />
-      <Main active={selectedFriend} onSplit={handleSplitBill} />
+      <Main active={selected} onSplit={handleSplitBill} />
     </div>
   );
 }
@@ -63,7 +61,7 @@ function FreindList({ freindList, addFreind, selected, handleSelected }) {
 }
 function Freind({ freind, selected, handleSelected }) {
   return (
-    <li key={freind.id} className={selected === freind.id ? "selected" : ""}>
+    <li key={freind.id} className={selected === freind ? "selected" : ""}>
       <img src={freind.image} alt={freind.name} />
       <div>
         <p>{freind.name}</p>
@@ -79,8 +77,8 @@ function Freind({ freind, selected, handleSelected }) {
             : `you and ${freind.name} are even`}
         </p>
       </div>
-      <Button onclick={() => handleSelected(freind.id)}>
-        {selected === freind.id ? "Close" : "Select"}
+      <Button onclick={() => handleSelected(freind)}>
+        {selected === freind ? "Close" : "Select"}
       </Button>
     </li>
   );
