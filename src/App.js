@@ -33,7 +33,7 @@ export default function App() {
         selected={selected}
         handleSelected={handleSelected}
       />
-      <Main active={selected} onSplit={handleSplitBill} />
+      <Main key={selected.id} active={selected} onSplit={handleSplitBill} />
     </div>
   );
 }
